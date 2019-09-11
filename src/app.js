@@ -76,7 +76,6 @@ app.get('/products', (req, res) => {
         })
     }
 
-    log(req.query)
     res.send({
         products: []
     })
@@ -99,5 +98,5 @@ app.get('*', (req, res) => {
 })
 
 app.listen(port, () => {
-    log('Server is up on port ' + port)
+    console.log('Server is up on port ' + port)
 })
