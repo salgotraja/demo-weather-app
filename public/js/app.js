@@ -22,3 +22,25 @@ weatherForm.addEventListener('submit', (e) => {
         })
     })
 })
+
+window.addEventListener("load", (e) => {
+    e.preventDefault()
+
+    if(!navigator.geolocation) {
+        return alert('Geolocation is not supported by your browser.')
+    }
+    navigator.geolocation.getCurrentPosition(sendLocation)
+});
+
+function sendLocation(position) {
+    fetch('/weather/current?longitude=' + position.coords.longitude + "&latitude=" + position.coords.latitude).then((response) => {
+        response.json().then((data) => {
+                if(data.error){
+                    messageOne.textContent = data.error
+                }else{
+                    messageOne.textContent = data.location
+                    messageTwo.textContent = data.forecast
+                }
+            })
+        })
+}

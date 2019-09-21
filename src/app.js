@@ -3,6 +3,7 @@ const express = require('express')
 const hbs = require('hbs')
 const geoCode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
+const geoLocation = require('./utils/geolocation')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -56,6 +57,32 @@ app.get('/weather', (req, res) => {
         }
 
         forecast(latitude, longitude, (error, forecastData) => {
+            if(error){
+                return res.send({error})
+            }
+
+            res.send({
+                forecast: forecastData,
+                location, 
+                address: req.query.address
+            })
+        })
+    })
+})
+
+app.get('/weather/current', (req, res) => {
+    if(!req.query.longitude && !req.query.latitude){
+        return res.send({
+            error: "Current location not available."
+        })
+    }
+
+    geoLocation(req.query.longitude, req.query.latitude, (error, { location } = {}) =>{
+        if(error) {
+            return res.send({error})
+        }
+
+        forecast(req.query.latitude, req.query.longitude, (error, forecastData) => {
             if(error){
                 return res.send({error})
             }
