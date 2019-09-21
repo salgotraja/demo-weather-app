@@ -2,7 +2,7 @@
 
 Basic Node.js v3 Weather application.
 
-* Check the **[Live Demo] (https://nodejs-pilot-weather-app.herokuapp.com/)**
+* Check the **[Live Demo](https://nodejs-pilot-weather-app.herokuapp.com/)**
 * Run the web app locally by following below steps:
 
 ```
